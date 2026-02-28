@@ -1,4 +1,9 @@
 {
-  "users": [],
-  "tasks": []
+    "users": [
+        {
+            "email": "test@mail.com",
+            "password": "008c70392e3abfbd0fa47bbc2ed96aa99bd49e159727fcba0f2e6abeb3a9d601"
+        }
+    ],
+    "tasks": []
 }
