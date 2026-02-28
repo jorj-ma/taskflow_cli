@@ -1,7 +1,6 @@
 import json
 import os
-import hashlib
-
+from models import BaseModel
 
 DATA_FILE = "data/database.json"
 
@@ -18,15 +17,14 @@ def initialize_db():
 
 def load_data():
     """Reads the file and returns the data."""
-    initialize_db() 
+    initialize_db()
     with open(DATA_FILE, 'r') as f:
-        return json.load(f)
+        data = json.load(f)
+        BaseModel.id_counter = data.get("next_task_id", 1)
+    return data
 
 def save_data(data):
     """Saves the data dictionary back to the file."""
+    data["next_task_id"] = BaseModel.id_counter
     with open(DATA_FILE, 'w') as f:
         json.dump(data, f, indent=4)
-
-def hash_password(password):
-    """Turns password into a secret code (hash)."""
-    return hashlib.sha256(password.encode()).hexdigest()

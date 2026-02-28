@@ -1,4 +1,3 @@
-
 def validate_username(username):
     if not username:
         return False, "Username cannot be empty"
