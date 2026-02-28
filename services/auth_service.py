@@ -38,3 +38,14 @@ def register_user(email, password):
     save_database(data)
 
     return "Registration successful"
+
+def login_user(email, password):
+    data = load_database()
+
+    hashed_password = hash_password(password)
+
+    for user in data["users"]:
+        if user["email"] == email and user["password"] == hashed_password:
+            return "Login successful"
+
+    return "Invalid credentials"
