@@ -1,4 +1,40 @@
 {
-  "users": [],
-  "tasks": []
+    "users": [
+        {
+            "id": 1,
+            "username": "alice",
+            "email": "alice@mail.com",
+            "password": "password123",
+            "role": "user"
+        },
+        {
+            "id": 2,
+            "username": "bob",
+            "email": "bob@mail.com",
+            "password": "securepass",
+            "role": "admin"
+        }
+    ],
+    "tasks": [
+        {
+            "id": 1,
+            "title": "Buy groceries",
+            "description": "Milk, bread, eggs",
+            "due_date": null,
+            "assigned_to": "alice@mail.com",
+            "status": "pending",
+            "created_at": "2026-02-28 22:47:13.176051",
+            "updated_at": "2026-02-28 22:47:13.176129"
+        },
+        {
+            "id": 2,
+            "title": "Review project plan",
+            "description": "Check milestones and deliverables",
+            "assigned_to": "bob@mail.com",
+            "status": "pending",
+            "created_at": "2026-02-28 19:21:00",
+            "updated_at": "2026-02-28 19:21:00"
+        }
+    ],
+    "next_task_id": 1
 }
