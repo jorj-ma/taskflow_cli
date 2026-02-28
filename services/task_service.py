@@ -31,3 +31,21 @@ def create_task(title, description, owner_email):
     save_database(data)
 
     return "Task created successfully"
+
+def delete_task(title, owner_email):
+    data = load_database()
+
+    tasks = data["tasks"]
+
+    updated_tasks = [
+        task for task in tasks
+        if not (task["title"] == title and task["owner"] == owner_email)
+    ]
+
+    if len(tasks) == len(updated_tasks):
+        return "Task not found or permission denied"
+
+    data["tasks"] = updated_tasks
+    save_database(data)
+
+    return "Task deleted"
