@@ -17,3 +17,32 @@ def create_task(title, description, owner_email):
     save_data(data)
 
     return "Task created successfully"
+
+
+def delete_task(title, owner_email):
+    data = load_data()
+
+    tasks = data["tasks"]
+
+    updated_tasks = [
+        task for task in tasks
+        if not (task["title"] == title and task["assigned_to"] == owner_email)
+    ]
+
+    if len(tasks) == len(updated_tasks):
+        return "Task not found or permission denied"
+
+    data["tasks"] = updated_tasks
+    save_data(data)
+
+    return "Task deleted"
+
+
+def get_task_by_user(owner_email):
+    data = load_data()
+
+    return [
+        Task.from_dict(task)
+        for task in data["tasks"]
+        if task["assigned_to"] == owner_email
+    ]
