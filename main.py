@@ -106,5 +106,5 @@ def main():
         except Exception as e:
             print(Fore.RED + f"Error: {e}" + Style.RESET_ALL)
 
-if _name_ == "_main_":
+if __name__ == "_main_":
     main()
