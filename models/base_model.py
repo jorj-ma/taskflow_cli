@@ -25,7 +25,4 @@ class BaseModel:
         return self._updated_at  # getter property for the latest update timestamp
 
     def save(self):
-        self._updated_at = datetime()  # updates timestamp for updated_at everytime the object is modified
-
-    def __repr__(self):
-        return 
+        self._updated_at = datetime.now()  # updates timestamp for updated_at everytime the object is modified
