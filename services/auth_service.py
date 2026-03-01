@@ -1,6 +1,5 @@
 from models import User
 from utilities.helpers import load_data, save_data
-import hashlib
 
 
 def register_user(username, email, password, role="user"):
@@ -26,13 +25,18 @@ def register_user(username, email, password, role="user"):
     return "Registration successful"
 
 
-def login_user(email, password):
+def login_user(username, password):
     data = load_data()
 
-    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    for user_dict in data["users"]:
+        existing_user = User(
+            username=user_dict["username"],
+            email=user_dict["email"],
+            password=user_dict["password"],
+            role=user_dict["role"]
+        )
 
-    for user in data["users"]:
-        if user["email"] == email and user["password"] == hashed_password:
-            return "Login successful"
+        if existing_user.username == username and existing_user.check_password(password):
+            return existing_user
 
-    return "Invalid credentials"
+    return None
