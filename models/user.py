@@ -7,7 +7,7 @@ class User(BaseModel):
         self._username = username
         self._email = email
         self._password = password
-        self._role = role
+        self._role = role  # admin or user
 
     @property
     def username(self):
@@ -29,3 +29,7 @@ class User(BaseModel):
 
     def __str__(self):
         return f"User:{self._username} ({self._role})"  # formatted string output
+
+    @property
+    def email(self):
+        return self._email
