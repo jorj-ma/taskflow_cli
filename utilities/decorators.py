@@ -1,4 +1,3 @@
-
 from colorama import Fore, Style
 
 def login_required(func):
