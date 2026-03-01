@@ -1,40 +1,38 @@
-import json
-import os
+from models import User
+from utilities.helpers import load_data, save_data
 import hashlib
 
-DATABASE_PATH = os.path.join("data", "database.json")
 
+def register_user(username, email, password, role="user"):
+    data = load_data()
 
-def load_database():
-    with open(DATABASE_PATH, "r") as file:
-        return json.load(file)
-
-
-def save_database(data):
-    with open(DATABASE_PATH, "w") as file:
-        json.dump(data, file, indent=4)
-
-
-def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
-
-
-def register_user(email, password):
-    data = load_database()
-
-
-    for user in data["users"]:
-        if user["email"] == email:
+    for user_dict in data["users"]:
+        if user_dict["email"] == email:
             return "User already exists"
 
-    hashed_password = hash_password(password)
+    new_user = User(username=username, email=email, password=password, role=role)
 
-    new_user = {
-        "email": email,
-        "password": hashed_password
+    user_dict = {
+        "id": new_user.id,
+        "username": new_user.username,
+        "email": new_user.email,
+        "password": new_user._password,
+        "role": new_user.role
     }
 
-    data["users"].append(new_user)
-    save_database(data)
+    data["users"].append(user_dict)
+    save_data(data)
 
     return "Registration successful"
+
+
+def login_user(email, password):
+    data = load_data()
+
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+
+    for user in data["users"]:
+        if user["email"] == email and user["password"] == hashed_password:
+            return "Login successful"
+
+    return "Invalid credentials"
