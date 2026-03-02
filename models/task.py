@@ -55,3 +55,8 @@ class Task(BaseModel):
             ) 
         task._id = data.get("id", task.id) 
         return task
+    
+    def assign_to(self,user):
+        self._assigned_to=user.email
+        user.add_task(self)
+        self.save()
