@@ -1,4 +1,4 @@
-from models import User
+from models import User,Task
 from utilities.helpers import load_data, save_data
 
 
@@ -37,6 +37,13 @@ def login_user(username, password):
         )
 
         if existing_user.username == username and existing_user.check_password(password):
+            # Populate tasks for this user
+            existing_user._tasks = [
+                Task.from_dict(task)
+                for task in data["tasks"]
+                if task["assigned_to"] == existing_user.email
+            ]
+
             return existing_user
 
     return None
