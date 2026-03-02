@@ -59,12 +59,12 @@ def main():
                 print(Fore.MAGENTA + f"\n--- Dashboard ({current_user.role}) ---" + Style.RESET_ALL)
                 print("1. View Tasks")
                 print("2. Logout")
-                
+                print("3. Add Task")   # now available for all users
+
                 if current_user.role == "admin":
-                    print("3. Add Task")
                     print("4. Delete Task")
                 else:
-                    print("3. Finish Task")
+                    print("4. Finish Task")
 
                 choice = input("Choice: ")
 
@@ -75,19 +75,26 @@ def main():
 
                 elif choice == "2":
                     current_user = None
-                
-                elif choice == "3" and current_user.role == "admin":
+
+                elif choice == "3":
                     title = input("Title: ")
                     desc = input("Description: ")
-                    create_task(title, desc, current_user.email)
-                    print("Task added.")
+
+                    if current_user.role == "admin":
+                        assignee = input("Assign to (email): ")
+                        create_task(title, desc, assignee)
+                        print("Task added.")
+                    else:
+                        # normal user can only assign to themselves
+                        create_task(title, desc, current_user.email)
+                        print("Task added.")
 
                 elif choice == "4" and current_user.role == "admin":
                     title = input("Title to delete: ")
                     result = delete_task(title, current_user.email)
                     print(result)
 
-                elif choice == "3" and current_user.role == "user":
+                elif choice == "4" and current_user.role == "user":
                     title = input("Title of task to finish: ")
                     tasks = get_task_by_user(current_user.email)
                     for t in tasks:
