@@ -1,4 +1,5 @@
 from models.base_model import BaseModel
+from models.task import Task
 
 
 class User(BaseModel):
@@ -7,7 +8,8 @@ class User(BaseModel):
         self._username = username
         self._email = email
         self._password = password
-        self._role = role
+        self._role = role  # admin or user
+        self._tasks7=[]
 
     @property
     def username(self):
@@ -29,3 +31,25 @@ class User(BaseModel):
 
     def __str__(self):
         return f"User:{self._username} ({self._role})"  # formatted string output
+
+    @property
+    def email(self):
+        return self._email
+
+    @property
+    def tasks(self):
+        return self._tasks
+    
+    @property
+    def add_task(self,task):
+        if not isinstance(task,Task):
+            raise TypeError ('Only Task instances can be added')
+        if task._assigned_to != self._email:
+            raise ValueError('Task must be assihned to the users email.')
+        self._tasks.append(task)
+        self.save()
+
+    def remove_task(self, task):
+        if task in self._tasks:
+            self._tasks.remove(task)
+            self.save()
